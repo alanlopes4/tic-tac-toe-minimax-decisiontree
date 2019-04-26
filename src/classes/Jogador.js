@@ -16,7 +16,7 @@ class Player {
       throw "o primeiro argumento do melhorMovimento deve ser uma instancia da classe Tabuleiro.";
     }
 
-    tabuleiro.mostrarTabuleiro(profundidade);
+    //tabuleiro.mostrarTabuleiro(profundidade);
 
     if (profundidade == 0) this.mapa_nos.clear();
     if (tabuleiro.terminal() || profundidade == this.max_profundidade) {
@@ -120,6 +120,7 @@ class Player {
   }
 
   melhorMovimentoArvoreDecisao(tabuleiro) {
+    var posicao = -1;
     if (!tabuleiro instanceof Tabuleiro) {
       throw "o primeiro argumento do melhorMovimento deve ser uma instancia da classe Tabuleiro.";
     }
@@ -128,35 +129,41 @@ class Player {
       //Se o usuário marcar no centro do tabuleiro
       if (tabuleiro.estado[4] == "x") {
         tabuleiro.inserir("o", 0); //inseri o simbolo na primeiro posicao
+        posicao = 0;
       } else {
         tabuleiro.inserir("o", 4); //inseiro o simbolo no meio do tabuleiro
+        posicao = 4;
       }
       this.primeiro_jogada = false;
     } else {
       var result = checarDuplos(tabuleiro, "o"); //checa se o jogador 'o' tem duplos feitos,
       if (result != -1) {
         //caso positivo
-        console.log(result);
         tabuleiro.inserir("o", result.posicao); //marca na posicao e ganha o jogo
+        posicao = result.posicao;
       } else {
         //caso negativo
         result = checarDuplos(tabuleiro, "x"); //procura se o adversario 'x' tem duplos
         if (result != -1) {
           //caso positivo
           tabuleiro.inserir("o", result.posicao); //marca na posicao para nao deixar o adversario ganhar
+          posicao = result.posicao;
         } else {
           result = intersecaoDupla(tabuleiro, "x"); //se encontrar uma intersecao dupla do adversario
           if (result != -1) {
             tabuleiro.inserir("o", result); //marca em uma posicao que impede ele de ganhar
+            posicao = result;
           } else {
             result = intersecaoSimples(tabuleiro, "x");
             if (result != -1) {
               tabuleiro.inserir("o", result);
+              posicao = result;
             }
           }
         }
       }
     }
+    return posicao;
   }
 }
 export default Player;

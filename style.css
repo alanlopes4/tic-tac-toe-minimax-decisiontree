@@ -4,8 +4,28 @@
   flex-grow: 1;
   justify-content: space-between;
 }
+#minimax {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#arvoreTree {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 #tabuleiro {
+  width: 460px;
+  height: 460px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+#tabuleiro2 {
   width: 460px;
   height: 460px;
   position: relative;
@@ -16,7 +36,18 @@
   box-sizing: border-box;
 }
 
+#tabuleiro2 * {
+  box-sizing: border-box;
+}
+
 #tabuleiro::after {
+  content: "";
+  position: absolute;
+  background-color: #52d29d;
+  transition: 0.7s;
+}
+
+#tabuleiro2::after {
   content: "";
   position: absolute;
   background-color: #52d29d;
@@ -30,20 +61,53 @@
   transform: translateY(-50%);
 }
 
+#tabuleiro2[class^="H"]::after {
+  width: 0%;
+  height: 3px;
+  left: 0;
+  transform: translateY(-50%);
+}
+
 #tabuleiro [class^="H"] .full::after {
+  width: 100%;
+}
+
+#tabuleiro2 [class^="H"] .full::after {
   width: 100%;
 }
 
 #tabuleiro .H1::after {
   top: 16.6666666665%;
 }
+
+#tabuleiro2 .H1::after {
+  top: 16.6666666665%;
+}
+
 #tabuleiro .H2::after {
   top: 50%;
 }
+
+#tabuleiro2 .H2::after {
+  top: 50%;
+}
+
 #tabuleiro .H3::after {
   top: 83.33333333%;
 }
+
+#tabuleiro2 .H3::after {
+  top: 83.33333333%;
+}
+
 #tabuleiro [class^="V"]::after {
+  width: 3px;
+  height: 0%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+#tabuleiro2 [class^="V"]::after {
   width: 3px;
   height: 0%;
   top: 0;
@@ -54,15 +118,34 @@
   height: 100%;
 }
 
+#tabuleiro2 [class^="V"] .full::after {
+  height: 100%;
+}
+
 #tabuleiro .V1::after {
   left: 16.6666666665%;
 }
+
+#tabuleiro2 .V1::after {
+  left: 16.6666666665%;
+}
+
 #tabuleiro .V2::after {
   left: 50%;
 }
+
+#tabuleiro2 .V2::after {
+  left: 50%;
+}
+
 #tabuleiro .V3::after {
   left: 83.33333333%;
 }
+
+#tabuleiro2 .V3::after {
+  left: 83.33333333%;
+}
+
 #tabuleiro .D1::after {
   height: 0%;
   width: 3px;
@@ -72,7 +155,22 @@
   transform-origin: 50% 0;
   transition: height 0.7s;
 }
+
+#tabuleiro2 .D1::after {
+  height: 0%;
+  width: 3px;
+  left: 0;
+  top: 0;
+  transform: rotateZ(-45deg);
+  transform-origin: 50% 0;
+  transition: height 0.7s;
+}
+
 #tabuleiro .D1 .full::after {
+  height: 140%;
+}
+
+#tabuleiro2 .D1 .full::after {
   height: 140%;
 }
 
@@ -85,7 +183,22 @@
   transform-origin: 50% 0;
   transition: height 0.7s;
 }
+
+#tabuleiro2 .D2::after {
+  height: 0%;
+  width: 3px;
+  right: 0;
+  top: 0;
+  transform: rotateZ(45deg);
+  transform-origin: 50% 0;
+  transition: height 0.7s;
+}
+
 #tabuleiro .D2 .full::after {
+  height: 140%;
+}
+
+#tabuleiro2 .D2 .full::after {
   height: 140%;
 }
 
@@ -98,10 +211,28 @@
   cursor: pointer;
 }
 
+#tabuleiro2 [class^="cell-"] {
+  height: 33.3333333%;
+  width: 33.3333333%;
+  float: left;
+  border: 1px solid #000;
+  position: relative;
+  cursor: pointer;
+}
+
 #tabuleiro [class^="cell-"].o {
   cursor: not-allowed;
 }
+
+#tabuleiro2 [class^="cell-"].o {
+  cursor: not-allowed;
+}
+
 #tabuleiro [class^="cell-"].x {
+  cursor: not-allowed;
+}
+
+#tabuleiro2 [class^="cell-"].x {
   cursor: not-allowed;
 }
 
@@ -120,7 +251,37 @@
   line-height: 70px;
 }
 
+#tabuleiro2 [class^="cell-"].x::after {
+  position: absolute;
+  width: calc(100% - 60px);
+  height: calc(100% - 60px);
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 65px;
+  text-align: center;
+  font-family: cursive;
+  line-height: 70px;
+}
+
 #tabuleiro [class^="cell-"].o::after {
+  position: absolute;
+  width: calc(100% - 60px);
+  height: calc(100% - 60px);
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 65px;
+  text-align: center;
+  font-family: cursive;
+  line-height: 70px;
+}
+
+#tabuleiro2 [class^="cell-"].o::after {
   position: absolute;
   width: calc(100% - 60px);
   height: calc(100% - 60px);
@@ -139,7 +300,15 @@
   content: "x";
 }
 
+#tabuleiro2 [class^="cell-"].x::after {
+  content: "x";
+}
+
 #tabuleiro [class^="cell-"].o::after {
+  content: "o";
+}
+
+#tabuleiro2 [class^="cell-"].o::after {
   content: "o";
 }
 
