@@ -1,4 +1,5 @@
 import Tabuleiro from "./Tabuleiro";
+import { checarDuplos, intersecaoDupla, intersecaoSimples } from "./util";
 class Player {
   constructor(max_profundidade = -1) {
     this.max_profundidade = max_profundidade;
@@ -132,164 +133,30 @@ class Player {
       }
       this.primeiro_jogada = false;
     } else {
-      const result = checarDuplo(tabuleiro);
+      var result = checarDuplos(tabuleiro, "o"); //checa se o jogador 'o' tem duplos feitos,
       if (result != -1) {
-        tabuleiro.inserir("o", posicao);
+        //caso positivo
+        console.log(result);
+        tabuleiro.inserir("o", result.posicao); //marca na posicao e ganha o jogo
+      } else {
+        //caso negativo
+        result = checarDuplos(tabuleiro, "x"); //procura se o adversario 'x' tem duplos
+        if (result != -1) {
+          //caso positivo
+          tabuleiro.inserir("o", result.posicao); //marca na posicao para nao deixar o adversario ganhar
+        } else {
+          result = intersecaoDupla(tabuleiro, "x"); //se encontrar uma intersecao dupla do adversario
+          if (result != -1) {
+            tabuleiro.inserir("o", result); //marca em uma posicao que impede ele de ganhar
+          } else {
+            result = intersecaoSimples(tabuleiro, "x");
+            if (result != -1) {
+              tabuleiro.inserir("o", result);
+            }
+          }
+        }
       }
     }
-  }
-
-  checarDuplos(tabuleiro) {
-    //chegando Horizontais
-    if (tabuleiro.estado[0] == tabuleiro.estado[1])
-      return {
-        vencedor: tabuleiro.estado[0],
-        direcao: "H",
-        linha: 1,
-        posicao: 2
-      };
-    if (tabuleiro.estado[0] == tabuleiro.estado[2])
-      return {
-        vencedor: tabuleiro.estado[0],
-        direcao: "H",
-        linha: 1,
-        posicao: 1
-      }; // o | ? | o -> 1
-    if (tabuleiro.estado[1] == tabuleiro.estado[2])
-      return {
-        vencedor: tabuleiro.estado[1],
-        direcao: "H",
-        linha: 1,
-        posicao: 0
-      }; // ? | o | o -> 0
-
-    if (tabuleiro.estado[3] == tabuleiro.estado[4])
-      return {
-        vencedor: tabuleiro.estado[3],
-        direcao: "H",
-        linha: 2,
-        posicao: 5
-      }; // o | o | ? -> 2
-    if (tabuleiro.estado[3] == tabuleiro.estado[5])
-      return {
-        vencedor: tabuleiro.estado[3],
-        direcao: "H",
-        linha: 2,
-        posicao: 4
-      }; // o | ? | o -> 1
-    if (tabuleiro.estado[4] == tabuleiro.estado[5])
-      return {
-        vencedor: tabuleiro.estado[4],
-        direcao: "H",
-        linha: 2,
-        posicao: 3
-      }; // ? | o | o -> 0
-
-    if (tabuleiro.estado[6] == tabuleiro.estado[7])
-      return {
-        vencedor: tabuleiro.estado[6],
-        direcao: "H",
-        linha: 3,
-        posicao: 8
-      }; // o | o | ? -> 2
-    if (tabuleiro.estado[6] == tabuleiro.estado[8])
-      return {
-        vencedor: tabuleiro.estado[6],
-        direcao: "H",
-        linha: 3,
-        posicao: 7
-      }; // o | ? | o -> 1
-    if (tabuleiro.estado[7] == tabuleiro.estado[8])
-      return {
-        vencedor: tabuleiro.estado[7],
-        direcao: "H",
-        linha: 3,
-        posicao: 6
-      }; // ? | o | o -> 0
-
-    //Checar verticais
-    if (tabuleiro.estado[0] == tabuleiro.estado[3])
-      return {
-        vencedor: tabuleiro.estado[0],
-        direcao: "V",
-        coluna: 1,
-        posicao: 6
-      }; // o | o | ? -> 2
-    if (tabuleiro.estado[0] == tabuleiro.estado[6])
-      return {
-        vencedor: tabuleiro.estado[0],
-        direcao: "V",
-        coluna: 1,
-        posicao: 3
-      }; // o | ? | o -> 1
-    if (tabuleiro.estado[3] == tabuleiro.estado[6])
-      return {
-        vencedor: tabuleiro.estado[3],
-        direcao: "V",
-        coluna: 1,
-        posicao: 0
-      }; // ? | o | o -> 0
-
-    if (tabuleiro.estado[1] == tabuleiro.estado[4])
-      return {
-        vencedor: tabuleiro.estado[1],
-        direcao: "V",
-        coluna: 2,
-        posicao: 7
-      }; // o | o | ? -> 2
-    if (tabuleiro.estado[1] == tabuleiro.estado[7])
-      return {
-        vencedor: tabuleiro.estado[1],
-        direcao: "V",
-        coluna: 2,
-        posicao: 4
-      }; // o | ? | o -> 1
-    if (tabuleiro.estado[4] == tabuleiro.estado[7])
-      return {
-        vencedor: tabuleiro.estado[4],
-        direcao: "V",
-        coluna: 2,
-        posicao: 1
-      }; // ? | o | o -> 0
-
-    if (tabuleiro.estado[2] == tabuleiro.estado[5])
-      return {
-        vencedor: tabuleiro.estado[2],
-        direcao: "V",
-        coluna: 3,
-        posicao: 8
-      }; // o | o | ? -> 2
-    if (tabuleiro.estado[2] == tabuleiro.estado[8])
-      return {
-        vencedor: tabuleiro.estado[2],
-        direcao: "V",
-        coluna: 3,
-        posicao: 5
-      }; // o | ? | o -> 1
-    if (tabuleiro.estado[5] == tabuleiro.estado[8])
-      return {
-        vencedor: tabuleiro.estado[5],
-        direcao: "V",
-        coluna: 3,
-        posicao: 2
-      }; // ? | o | o -> 0
-
-    //Checar diagonais
-    if (tabuleiro.estado[0] == tabuleiro.estado[4])
-      return { vencedor: tabuleiro.estado[0], direcao: "D", posicao: 8 }; // o | o | ? -> 2
-    if (tabuleiro.estado[0] == tabuleiro.estado[8])
-      return { vencedor: tabuleiro.estado[0], direcao: "D", posicao: 4 }; // o | ? | o -> 1
-    if (tabuleiro.estado[4] == tabuleiro.estado[8])
-      return { vencedor: tabuleiro.estado[4], direcao: "D", posicao: 0 }; // ? | o | o -> 0
-
-    if (tabuleiro.estado[2] == tabuleiro.estado[4])
-      return { vencedor: tabuleiro.estado[2], direcao: "D", posicao: 6 }; // o | o | ? -> 2
-    if (tabuleiro.estado[2] == tabuleiro.estado[6])
-      return { vencedor: tabuleiro.estado[2], direcao: "D", posicao: 4 }; // o | ? | o -> 1
-    if (tabuleiro.estado[4] == tabuleiro.estado[6])
-      return { vencedor: tabuleiro.estado[4], direcao: "D", posicao: 2 }; // ? | o | o -> 0
-
-    return -1;
   }
 }
 export default Player;

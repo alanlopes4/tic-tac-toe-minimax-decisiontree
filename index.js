@@ -1,9 +1,25 @@
 import Tabuleiro from "./src/classes/Tabuleiro";
 import Jogador from "./src/classes/Jogador";
-//let tabuleiro = new Tabuleiro(["x", "o", "", "", "", "", "o", "", "x"]);
-//tabuleiro.mostrarTabuleiro();
-//let p = new Jogador();
-//console.log(p.melhorMovimento(tabuleiro));
+
+let tabuleiro = new Tabuleiro(["", "", "", "", "", "", "", "", ""]);
+tabuleiro.mostrarTabuleiro();
+let p = new Jogador();
+tabuleiro.inserir("x", 0);
+tabuleiro.mostrarTabuleiro();
+p.melhorMovimentoArvoreDecisao(tabuleiro);
+tabuleiro.mostrarTabuleiro();
+tabuleiro.inserir("x", 5);
+tabuleiro.mostrarTabuleiro();
+p.melhorMovimentoArvoreDecisao(tabuleiro);
+tabuleiro.mostrarTabuleiro();
+tabuleiro.inserir("x", 7);
+tabuleiro.mostrarTabuleiro();
+p.melhorMovimentoArvoreDecisao(tabuleiro);
+tabuleiro.mostrarTabuleiro();
+tabuleiro.inserir("x", 6);
+tabuleiro.mostrarTabuleiro();
+p.melhorMovimentoArvoreDecisao(tabuleiro);
+tabuleiro.mostrarTabuleiro();
 //console.log(p.mapa_nos);
 import "./style.css";
 
