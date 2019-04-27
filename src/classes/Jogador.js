@@ -17,6 +17,7 @@ class Player {
     }
 
     //tabuleiro.mostrarTabuleiro(profundidade);
+    //document.getElementById("profundidade").innerHTML += "Testando";
 
     if (profundidade == 0) this.mapa_nos.clear();
     if (tabuleiro.terminal() || profundidade == this.max_profundidade) {

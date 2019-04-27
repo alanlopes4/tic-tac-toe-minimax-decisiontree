@@ -273,9 +273,9 @@ export function intersecaoSimples(tabuleiro, simbolo) {
     tabuleiro.estado[0] == tabuleiro.estado[5] &&
     tabuleiro.estado[0] == simbolo
   )
-    if (tabuleiro.estado[1] == "") return 1;
+    if (tabuleiro.estado[8] == "") return 8;
+    else if (tabuleiro.estado[1] == "") return 1;
     else if (tabuleiro.estado[2] == "") return 2;
-    else if (tabuleiro.estado[8] == "") return 8;
 
   if (
     tabuleiro.estado[2] == tabuleiro.estado[7] &&

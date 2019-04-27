@@ -49,6 +49,7 @@ function newGame(depth = 1, starting_player = 1) {
   //Inicializa com um novo jogador e o tabuleiro vazio
   let p = new Jogador(parseInt(depth));
   let b = new Tabuleiro(["", "", "", "", "", "", "", "", ""]);
+  let dadosProfundidade = document.getElementById("profundidade");
   //Limpa todas as posições do tabuleiro
   let tabuleiro = document.getElementById("tabuleiro");
   tabuleiro.className = "";
