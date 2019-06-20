@@ -138,7 +138,6 @@ function newGame2() {
         b.inserir("x", index);
         addClass(html_cells[index], "x");
         let posicao = p.melhorMovimentoArvoreDecisao(b);
-        console.log(posicao);
         addClass(html_cells[posicao], "o");
       },
       false
